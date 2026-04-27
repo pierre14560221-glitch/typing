@@ -6,17 +6,22 @@
   <title>SAI先生のタイピング教室</title>
   <style>
     :root {
-      --bg: #f6f1df;
-      --panel: #fffaf0;
-      --panel-strong: #fff2c9;
-      --ink: #2d2a26;
-      --muted: #756f64;
-      --line: #d9cba5;
-      --accent: #f0b429;
-      --accent-strong: #d78916;
-      --good: #3b8f5a;
-      --bad: #c74f4f;
-      --shadow: 0 14px 32px rgba(80, 64, 30, 0.16);
+      --bg-deep: #10151f;
+      --bg: #182232;
+      --panel: rgba(27, 36, 53, 0.92);
+      --panel-strong: rgba(42, 55, 78, 0.96);
+      --panel-soft: rgba(255, 255, 255, 0.055);
+      --text: #f3f0e8;
+      --muted: #b9b1a2;
+      --line: rgba(209, 198, 170, 0.32);
+      --line-strong: rgba(220, 211, 186, 0.58);
+      --emerald: #60d394;
+      --emerald-deep: #248457;
+      --violet: #9b7cff;
+      --red: #ff6b7a;
+      --blue: #73d2ff;
+      --silver: #d8dfeb;
+      --shadow: 0 18px 40px rgba(0, 0, 0, 0.34);
       --radius: 22px;
     }
 
@@ -28,150 +33,236 @@
       margin: 0;
       min-height: 100vh;
       font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      color: var(--ink);
+      color: var(--text);
       background:
-        radial-gradient(circle at top left, rgba(240, 180, 41, 0.18), transparent 32%),
-        linear-gradient(180deg, #fbf6e8 0%, var(--bg) 100%);
+        radial-gradient(circle at 18% 8%, rgba(96, 211, 148, 0.16), transparent 28%),
+        radial-gradient(circle at 86% 18%, rgba(155, 124, 255, 0.16), transparent 30%),
+        linear-gradient(180deg, #0d111a 0%, var(--bg-deep) 42%, #151d2a 100%);
       overflow-x: hidden;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.035) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.035) 1px, transparent 1px);
+      background-size: 44px 44px;
+      mask-image: linear-gradient(180deg, rgba(0,0,0,0.85), rgba(0,0,0,0.12));
     }
 
     button {
       font: inherit;
+      color: inherit;
     }
 
     .app {
-      width: min(1180px, calc(100% - 32px));
+      position: relative;
+      z-index: 1;
+      width: min(1200px, calc(100% - 32px));
       margin: 0 auto;
-      padding: 24px 0 220px;
+      padding: 24px 0 235px;
     }
 
-    .hero {
+    .top-title {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 16px;
+    }
+
+    .top-title h1 {
+      margin: 0;
+      font-size: clamp(26px, 4vw, 46px);
+      letter-spacing: 0.04em;
+      line-height: 1.1;
+      text-shadow: 0 0 24px rgba(96, 211, 148, 0.28);
+    }
+
+    .top-title p {
+      margin: 8px 0 0;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    .badge {
+      border: 1px solid var(--line-strong);
+      background: rgba(255, 255, 255, 0.06);
+      border-radius: 999px;
+      padding: 8px 12px;
+      color: var(--silver);
+      white-space: nowrap;
+    }
+
+    .layout {
       display: grid;
-      grid-template-columns: 280px 1fr;
-      gap: 20px;
+      grid-template-columns: 300px 1fr;
+      gap: 18px;
       align-items: stretch;
+    }
+
+    .card {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background:
+        linear-gradient(135deg, rgba(255,255,255,0.075), transparent 30%),
+        radial-gradient(circle at top right, rgba(96, 211, 148, 0.13), transparent 40%);
     }
 
     .teacher-card,
     .game-card,
     .stats-card,
     .keyboard-card {
-      background: rgba(255, 250, 240, 0.9);
-      border: 2px solid rgba(217, 203, 165, 0.75);
-      border-radius: var(--radius);
-      box-shadow: var(--shadow);
+      position: relative;
     }
 
     .teacher-card {
       padding: 18px;
-      position: relative;
-      overflow: hidden;
-      min-height: 430px;
+      min-height: 520px;
+      display: grid;
+      grid-template-rows: auto 1fr auto;
+      gap: 14px;
     }
 
-    .teacher-card::before {
-      content: "";
-      position: absolute;
-      inset: 16px;
-      border: 1px dashed rgba(117, 111, 100, 0.26);
-      border-radius: 18px;
-      pointer-events: none;
+    .teacher-label {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .name-tag {
+      background: linear-gradient(135deg, rgba(96, 211, 148, 0.22), rgba(155, 124, 255, 0.18));
+      border: 1px solid var(--line-strong);
+      border-radius: 999px;
+      padding: 8px 12px;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+    }
+
+    .teacher-role {
+      color: var(--muted);
+      font-size: 13px;
     }
 
     .teacher-image-wrap {
       position: relative;
-      height: 260px;
+      z-index: 1;
+      border-radius: 20px;
+      min-height: 280px;
       display: grid;
       place-items: end center;
-      margin-bottom: 16px;
-      background: linear-gradient(180deg, rgba(255, 242, 201, 0.7), rgba(255, 250, 240, 0.4));
-      border-radius: 18px;
+      background:
+        radial-gradient(circle at 50% 18%, rgba(115, 210, 255, 0.16), transparent 32%),
+        linear-gradient(180deg, rgba(255, 255, 255, 0.055), rgba(255, 255, 255, 0.018));
+      border: 1px solid var(--line);
       overflow: hidden;
     }
 
     .teacher-image {
-      width: 86%;
-      max-height: 245px;
+      width: 90%;
+      max-height: 265px;
       object-fit: contain;
       object-position: bottom center;
-      filter: drop-shadow(0 12px 12px rgba(90, 70, 30, 0.18));
+      filter: drop-shadow(0 18px 18px rgba(0, 0, 0, 0.28));
     }
 
     .image-placeholder {
       width: 82%;
-      height: 220px;
-      border: 2px dashed rgba(117, 111, 100, 0.35);
-      border-radius: 16px 16px 0 0;
+      height: 230px;
+      border: 1px dashed var(--line-strong);
+      border-radius: 18px 18px 0 0;
       display: grid;
       place-items: center;
       text-align: center;
       color: var(--muted);
       padding: 18px;
-      background: rgba(255, 255, 255, 0.45);
+      background: rgba(0, 0, 0, 0.12);
+      line-height: 1.7;
     }
 
-    .name-tag {
-      position: absolute;
-      left: 20px;
-      top: 20px;
-      background: var(--ink);
-      color: #fffaf0;
-      padding: 8px 12px;
-      border-radius: 999px;
-      font-weight: 700;
-      letter-spacing: 0.04em;
+    .teacher-tags {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      gap: 8px;
+    }
+
+    .teacher-tags span {
+      display: block;
+      padding: 9px 11px;
+      background: rgba(255,255,255,0.055);
+      border: 1px solid rgba(255,255,255,0.09);
+      border-radius: 12px;
+      color: var(--silver);
+      font-size: 13px;
     }
 
     .speech {
       position: relative;
-      padding: 16px 16px 16px 18px;
-      background: #fff;
-      border: 2px solid var(--line);
+      z-index: 1;
+      padding: 16px;
+      background: rgba(13, 18, 28, 0.72);
+      border: 1px solid var(--line-strong);
       border-radius: 18px;
-      line-height: 1.7;
-      min-height: 114px;
+      line-height: 1.75;
+      min-height: 118px;
+      color: var(--text);
     }
 
-    .speech::before {
-      content: "";
-      position: absolute;
-      top: -12px;
-      left: 42px;
-      width: 20px;
-      height: 20px;
-      background: #fff;
-      border-left: 2px solid var(--line);
-      border-top: 2px solid var(--line);
-      transform: rotate(45deg);
+    .speech-title {
+      display: block;
+      color: var(--emerald);
+      font-weight: 800;
+      margin-bottom: 6px;
     }
 
     .game-card {
-      padding: 22px;
+      padding: 20px;
+      min-height: 520px;
       display: grid;
       grid-template-rows: auto 1fr auto;
-      gap: 16px;
-      min-height: 430px;
+      gap: 14px;
     }
 
-    .top-row {
-      display: flex;
-      justify-content: space-between;
-      gap: 12px;
+    .mode-panel {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 14px;
       align-items: center;
-      flex-wrap: wrap;
+      padding: 14px;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      background: rgba(0,0,0,0.14);
     }
 
-    .title-block h1 {
-      margin: 0 0 8px;
-      font-size: clamp(26px, 3vw, 42px);
-      line-height: 1.1;
-      letter-spacing: 0.02em;
+    .mode-panel h2 {
+      margin: 0 0 6px;
+      font-size: 18px;
     }
 
-    .title-block p {
+    .mode-panel p {
       margin: 0;
       color: var(--muted);
-      line-height: 1.6;
+      line-height: 1.55;
     }
 
     .mode-buttons {
@@ -184,37 +275,66 @@
     .mode-button,
     .primary-button,
     .sub-button {
-      border: 2px solid var(--line);
-      background: #fff;
-      color: var(--ink);
-      padding: 10px 14px;
+      border: 1px solid var(--line-strong);
+      background: rgba(255,255,255,0.06);
+      padding: 10px 13px;
       border-radius: 999px;
       cursor: pointer;
-      transition: transform 0.15s ease, background 0.15s ease, border-color 0.15s ease;
+      transition: transform 0.15s ease, background 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
     }
 
     .mode-button:hover,
     .primary-button:hover,
     .sub-button:hover {
       transform: translateY(-1px);
-      border-color: var(--accent-strong);
+      border-color: rgba(96, 211, 148, 0.82);
+      box-shadow: 0 0 18px rgba(96, 211, 148, 0.16);
     }
 
-    .mode-button.is-active,
+    .mode-button.is-active {
+      background: linear-gradient(135deg, rgba(96, 211, 148, 0.22), rgba(155, 124, 255, 0.16));
+      border-color: rgba(96, 211, 148, 0.82);
+      color: #ffffff;
+      font-weight: 800;
+    }
+
     .primary-button {
-      background: var(--accent);
-      border-color: var(--accent-strong);
-      font-weight: 700;
+      background: linear-gradient(135deg, var(--emerald-deep), #3264a8);
+      border-color: rgba(96, 211, 148, 0.88);
+      font-weight: 900;
+      min-width: 138px;
+    }
+
+    .primary-button:disabled,
+    .sub-button:disabled,
+    .mode-button:disabled {
+      cursor: not-allowed;
+      opacity: 0.48;
+      transform: none;
+      box-shadow: none;
     }
 
     .typing-area {
+      position: relative;
+      z-index: 1;
       display: grid;
       align-content: center;
       gap: 18px;
       padding: 22px;
       border-radius: 20px;
-      background: linear-gradient(180deg, rgba(255, 242, 201, 0.72), rgba(255, 255, 255, 0.56));
-      border: 2px solid rgba(217, 203, 165, 0.68);
+      background:
+        radial-gradient(circle at 50% 20%, rgba(96, 211, 148, 0.14), transparent 42%),
+        linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.028));
+      border: 1px solid var(--line-strong);
+      min-height: 275px;
+    }
+
+    .quest-label {
+      text-align: center;
+      color: var(--emerald);
+      font-weight: 800;
+      letter-spacing: 0.12em;
+      font-size: 13px;
     }
 
     .word-label {
@@ -223,31 +343,34 @@
       text-align: center;
       letter-spacing: 0.08em;
       line-height: 1.15;
+      text-shadow: 0 0 28px rgba(96, 211, 148, 0.22);
     }
 
     .word-meaning {
       text-align: center;
       color: var(--muted);
       min-height: 1.5em;
+      line-height: 1.6;
     }
 
     .romaji-line {
       text-align: center;
       font-size: clamp(24px, 4vw, 48px);
-      font-weight: 800;
+      font-weight: 900;
       letter-spacing: 0.08em;
       font-variant-ligatures: none;
       word-break: break-all;
     }
 
     .typed {
-      color: var(--good);
+      color: var(--emerald);
     }
 
     .current {
-      color: var(--ink);
+      color: #ffffff;
       position: relative;
       display: inline-block;
+      text-shadow: 0 0 18px rgba(115, 210, 255, 0.55);
     }
 
     .current::after {
@@ -258,20 +381,21 @@
       bottom: -5px;
       height: 5px;
       border-radius: 999px;
-      background: var(--accent);
+      background: var(--blue);
       animation: blink 0.9s infinite;
     }
 
     .remaining {
-      color: rgba(45, 42, 38, 0.35);
+      color: rgba(243, 240, 232, 0.32);
     }
 
     .mistake-flash {
       animation: shake 0.18s ease-in-out 0s 2;
+      border-color: rgba(255, 107, 122, 0.92);
     }
 
     @keyframes blink {
-      50% { opacity: 0.22; }
+      50% { opacity: 0.25; }
     }
 
     @keyframes shake {
@@ -289,32 +413,54 @@
     }
 
     .guide-box {
-      background: #fff;
-      border: 2px solid rgba(217, 203, 165, 0.8);
+      background: rgba(0, 0, 0, 0.18);
+      border: 1px solid var(--line);
       border-radius: 16px;
       padding: 12px;
-      min-height: 78px;
+      min-height: 82px;
     }
 
     .guide-label {
       display: block;
       color: var(--muted);
       font-size: 13px;
-      margin-bottom: 4px;
+      margin-bottom: 6px;
     }
 
     .guide-value {
       font-size: clamp(18px, 2.2vw, 28px);
-      font-weight: 800;
-      line-height: 1.2;
+      font-weight: 900;
+      line-height: 1.25;
+    }
+
+    .guide-value.key-value {
+      color: var(--blue);
+      text-shadow: 0 0 18px rgba(115, 210, 255, 0.35);
+    }
+
+    .guide-value.finger-value {
+      color: var(--emerald);
     }
 
     .controls {
+      position: relative;
+      z-index: 1;
       display: flex;
       gap: 10px;
       flex-wrap: wrap;
       justify-content: space-between;
       align-items: center;
+    }
+
+    .button-row {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .status-text {
+      color: var(--muted);
+      line-height: 1.6;
     }
 
     .hidden-input {
@@ -328,16 +474,18 @@
       margin-top: 18px;
       padding: 14px;
       display: grid;
-      grid-template-columns: repeat(5, 1fr);
+      grid-template-columns: repeat(6, 1fr);
       gap: 10px;
     }
 
     .stat {
-      background: #fff;
+      background: rgba(0, 0, 0, 0.18);
       border-radius: 16px;
-      border: 2px solid rgba(217, 203, 165, 0.58);
+      border: 1px solid var(--line);
       padding: 12px;
       text-align: center;
+      position: relative;
+      z-index: 1;
     }
 
     .stat span {
@@ -348,7 +496,12 @@
     }
 
     .stat strong {
-      font-size: 24px;
+      font-size: 26px;
+    }
+
+    .stat.timer strong {
+      color: var(--emerald);
+      text-shadow: 0 0 18px rgba(96, 211, 148, 0.34);
     }
 
     .keyboard-card {
@@ -357,15 +510,21 @@
     }
 
     .keyboard-title {
+      position: relative;
+      z-index: 1;
       margin: 0 0 12px;
       color: var(--muted);
       line-height: 1.6;
     }
 
     .keyboard {
+      position: relative;
+      z-index: 1;
       display: grid;
       gap: 8px;
       justify-items: center;
+      overflow-x: auto;
+      padding-bottom: 2px;
     }
 
     .key-row {
@@ -376,28 +535,30 @@
     }
 
     .key {
-      width: clamp(28px, 5vw, 48px);
-      height: clamp(30px, 5vw, 46px);
+      width: clamp(30px, 5vw, 49px);
+      height: clamp(32px, 5vw, 46px);
       border-radius: 10px;
       display: grid;
       place-items: center;
-      background: #fff;
-      border: 2px solid rgba(217, 203, 165, 0.78);
-      color: var(--ink);
-      font-weight: 800;
+      background: rgba(255,255,255,0.055);
+      border: 1px solid rgba(216, 223, 235, 0.22);
+      color: var(--silver);
+      font-weight: 900;
       text-transform: uppercase;
-      box-shadow: 0 4px 0 rgba(120, 98, 38, 0.14);
+      box-shadow: 0 4px 0 rgba(0, 0, 0, 0.18);
+      flex: 0 0 auto;
     }
 
     .key.home {
-      background: #fff7dd;
+      border-color: rgba(96, 211, 148, 0.38);
     }
 
     .key.active {
-      background: var(--accent);
-      border-color: var(--accent-strong);
+      background: rgba(115, 210, 255, 0.18);
+      border-color: rgba(115, 210, 255, 0.92);
+      color: #ffffff;
       transform: translateY(-3px);
-      box-shadow: 0 7px 0 rgba(120, 98, 38, 0.2);
+      box-shadow: 0 0 18px rgba(115, 210, 255, 0.38);
     }
 
     .hand-dock {
@@ -406,15 +567,15 @@
       right: 0;
       bottom: 0;
       z-index: 20;
-      background: rgba(255, 250, 240, 0.94);
+      background: rgba(11, 16, 25, 0.94);
       backdrop-filter: blur(10px);
-      border-top: 2px solid rgba(217, 203, 165, 0.9);
-      box-shadow: 0 -10px 26px rgba(80, 64, 30, 0.12);
+      border-top: 1px solid var(--line-strong);
+      box-shadow: 0 -16px 34px rgba(0, 0, 0, 0.35);
       padding: 14px 18px 16px;
     }
 
     .hand-inner {
-      width: min(1180px, 100%);
+      width: min(1200px, 100%);
       margin: 0 auto;
       display: grid;
       grid-template-columns: 1fr auto 1fr;
@@ -438,11 +599,11 @@
       justify-items: center;
       gap: 5px;
       padding: 8px 4px;
-      border-radius: 18px 18px 22px 22px;
-      background: linear-gradient(180deg, #fff7dc, #f2d7a2);
-      border: 2px solid rgba(142, 101, 45, 0.28);
-      color: #6b4a20;
-      transition: transform 0.15s ease, filter 0.15s ease, background 0.15s ease;
+      border-radius: 18px 18px 24px 24px;
+      background: linear-gradient(180deg, rgba(216, 223, 235, 0.14), rgba(96, 211, 148, 0.07));
+      border: 1px solid rgba(216, 223, 235, 0.2);
+      color: var(--silver);
+      transition: transform 0.15s ease, filter 0.15s ease, background 0.15s ease, border-color 0.15s ease;
     }
 
     .finger.index { min-height: 112px; }
@@ -452,41 +613,42 @@
     .finger.thumb { min-height: 66px; border-radius: 24px; }
 
     .finger.active {
-      background: linear-gradient(180deg, #ffe98c, #f0b429);
-      border-color: var(--accent-strong);
+      background: linear-gradient(180deg, rgba(96, 211, 148, 0.38), rgba(115, 210, 255, 0.2));
+      border-color: rgba(96, 211, 148, 0.92);
       transform: translateY(-10px) scale(1.04);
-      filter: drop-shadow(0 0 14px rgba(240, 180, 41, 0.65));
+      filter: drop-shadow(0 0 16px rgba(96, 211, 148, 0.58));
     }
 
     .finger-name {
       font-size: 12px;
-      font-weight: 700;
+      font-weight: 800;
       writing-mode: vertical-rl;
       letter-spacing: 0.08em;
       user-select: none;
     }
 
     .finger-key {
-      min-width: 24px;
-      height: 24px;
+      min-width: 26px;
+      height: 26px;
       display: grid;
       place-items: center;
       border-radius: 999px;
-      background: rgba(255, 255, 255, 0.8);
-      color: var(--ink);
+      background: rgba(0, 0, 0, 0.28);
+      border: 1px solid rgba(255,255,255,0.16);
+      color: #ffffff;
       font-weight: 900;
       text-transform: uppercase;
     }
 
     .center-guide {
       align-self: center;
-      min-width: 170px;
-      background: #fff;
-      border: 2px solid rgba(217, 203, 165, 0.85);
-      border-radius: 20px;
+      min-width: 190px;
+      background: rgba(24, 34, 50, 0.92);
+      border: 1px solid var(--line-strong);
+      border-radius: 22px;
       padding: 12px 14px;
       text-align: center;
-      box-shadow: 0 8px 18px rgba(80, 64, 30, 0.12);
+      box-shadow: 0 10px 24px rgba(0, 0, 0, 0.28);
     }
 
     .center-guide span {
@@ -497,16 +659,19 @@
     }
 
     .next-key {
-      font-size: 34px;
+      font-size: 38px;
       font-weight: 900;
       line-height: 1;
       text-transform: uppercase;
+      color: var(--blue);
+      text-shadow: 0 0 18px rgba(115, 210, 255, 0.45);
     }
 
     .finger-guide-text {
       margin-top: 6px;
-      color: var(--muted);
-      font-size: 14px;
+      color: var(--emerald);
+      font-size: 15px;
+      font-weight: 800;
       min-height: 1.4em;
     }
 
@@ -515,8 +680,9 @@
       right: 18px;
       top: 18px;
       z-index: 30;
-      background: var(--ink);
-      color: #fffaf0;
+      background: rgba(9, 13, 20, 0.92);
+      color: var(--text);
+      border: 1px solid var(--line-strong);
       border-radius: 999px;
       padding: 10px 14px;
       box-shadow: var(--shadow);
@@ -530,13 +696,84 @@
       opacity: 1;
     }
 
-    @media (max-width: 860px) {
+    .result-modal {
+      position: fixed;
+      inset: 0;
+      z-index: 40;
+      display: none;
+      place-items: center;
+      background: rgba(0,0,0,0.58);
+      padding: 18px;
+    }
+
+    .result-modal.show {
+      display: grid;
+    }
+
+    .result-card {
+      width: min(560px, 100%);
+      background:
+        radial-gradient(circle at 50% 0%, rgba(96, 211, 148, 0.18), transparent 42%),
+        var(--panel);
+      border: 1px solid var(--line-strong);
+      border-radius: 26px;
+      box-shadow: var(--shadow);
+      padding: 24px;
+      text-align: center;
+    }
+
+    .result-card h2 {
+      margin: 0 0 6px;
+      font-size: 34px;
+    }
+
+    .result-card p {
+      margin: 0 0 18px;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    .result-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+      margin: 18px 0;
+    }
+
+    .result-item {
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 12px;
+      background: rgba(0,0,0,0.17);
+    }
+
+    .result-item span {
+      display: block;
+      color: var(--muted);
+      font-size: 13px;
+      margin-bottom: 5px;
+    }
+
+    .result-item strong {
+      font-size: 28px;
+    }
+
+    @media (max-width: 900px) {
       .app {
-        width: min(100% - 20px, 720px);
-        padding-bottom: 260px;
+        width: min(100% - 20px, 760px);
+        padding-bottom: 300px;
       }
 
-      .hero {
+      .top-title {
+        display: block;
+      }
+
+      .badge {
+        display: inline-block;
+        margin-top: 12px;
+      }
+
+      .layout {
         grid-template-columns: 1fr;
       }
 
@@ -545,15 +782,24 @@
       }
 
       .teacher-image-wrap {
-        height: 180px;
+        min-height: 190px;
       }
 
       .teacher-image {
-        max-height: 170px;
+        max-height: 180px;
+      }
+
+      .mode-panel {
+        grid-template-columns: 1fr;
+      }
+
+      .mode-buttons {
+        justify-content: flex-start;
       }
 
       .guide-row,
-      .stats-card {
+      .stats-card,
+      .result-grid {
         grid-template-columns: 1fr;
       }
 
@@ -594,67 +840,90 @@
 <body>
   <div class="toast" id="toast">入力エリアを有効にしました</div>
 
-  <main class="app" onclick="focusTypingInput()">
-    <section class="hero">
-      <aside class="teacher-card" aria-label="SAI先生エリア">
-        <div class="name-tag">SAI先生</div>
+  <main class="app" onclick="focusTypingInput(false)">
+    <header class="top-title">
+      <div>
+        <h1>SAI先生のタイピング教室</h1>
+        <p>60秒でどこまで正確に打てるか。次のキーと使う指を見ながら、ブラインドタッチを練習します。</p>
+      </div>
+      <div class="badge">RPG Quest Typing / 60 sec</div>
+    </header>
+
+    <section class="layout">
+      <aside class="card teacher-card" aria-label="SAI先生エリア">
+        <div class="teacher-label">
+          <div>
+            <div class="name-tag">SAI先生</div>
+            <div class="teacher-role">プログラミング講師 / タイピングコーチ</div>
+          </div>
+        </div>
+
         <div class="teacher-image-wrap">
           <img id="teacherImage" class="teacher-image" src="img/sai-normal.png" alt="SAI先生" onerror="showTeacherPlaceholder()" />
           <div id="teacherPlaceholder" class="image-placeholder" hidden>
-            ここにSAI先生の立ち絵を配置<br />img/sai-normal.png
+            SAI先生の立ち絵エリア<br />img/sai-normal.png<br />画像なしでもゲームは動きます
           </div>
         </div>
+
+        <div class="teacher-tags">
+          <span>◆ 光った指で次のキーを押す</span>
+          <span>◆ 押したらホームポジションへ戻す</span>
+          <span>◆ 60秒後にスコアを表示</span>
+        </div>
+
         <div class="speech" id="teacherSpeech">
-          まずはホームポジションから始めよう。画面下の光った指で、次のキーを押してください。
+          <span class="speech-title">SAI先生</span>
+          難易度を選んで、スタートを押してください。60秒のクエストが始まります。
         </div>
       </aside>
 
-      <section class="game-card" aria-label="タイピングゲームエリア">
-        <div class="top-row">
-          <div class="title-block">
-            <h1>SAI先生のタイピング教室</h1>
-            <p>日本語の単語を、ローマ字入力で練習します。次に押すキーと、使う指が光ります。</p>
+      <section class="card game-card" aria-label="タイピングゲームエリア">
+        <div class="mode-panel">
+          <div>
+            <h2>難易度を選択</h2>
+            <p id="modeDescription">見習い：短めの単語が中心。まずは指の位置を覚えるモードです。</p>
           </div>
           <div class="mode-buttons" aria-label="難易度選択">
-            <button class="mode-button is-active" data-mode="lesson" onclick="setMode('lesson')">ゆっくり</button>
-            <button class="mode-button" data-mode="normal" onclick="setMode('normal')">通常</button>
-            <button class="mode-button" data-mode="challenge" onclick="setMode('challenge')">挑戦</button>
+            <button class="mode-button is-active" data-mode="easy" onclick="setMode('easy')">見習い</button>
+            <button class="mode-button" data-mode="normal" onclick="setMode('normal')">冒険者</button>
+            <button class="mode-button" data-mode="hard" onclick="setMode('hard')">賢者</button>
           </div>
         </div>
 
         <div class="typing-area" id="typingArea">
-          <div class="word-label" id="wordLabel">プログラミング</div>
-          <div class="word-meaning" id="wordMeaning">コンピューターに命令を伝えるための考え方と作業。</div>
+          <div class="quest-label" id="questLabel">QUEST WORD</div>
+          <div class="word-label" id="wordLabel">ゲーム</div>
+          <div class="word-meaning" id="wordMeaning">遊びながら学べる、プログラムの代表的な作品。</div>
           <div class="romaji-line" id="romajiLine" aria-live="polite"></div>
           <div class="guide-row">
             <div class="guide-box">
               <span class="guide-label">次のキー</span>
-              <div class="guide-value" id="nextKeyText">P</div>
+              <div class="guide-value key-value" id="nextKeyText">G</div>
             </div>
             <div class="guide-box">
               <span class="guide-label">使う指</span>
-              <div class="guide-value" id="fingerText">右手 小指</div>
+              <div class="guide-value finger-value" id="fingerText">左手 人差し指</div>
             </div>
             <div class="guide-box">
               <span class="guide-label">入力のコツ</span>
-              <div class="guide-value" id="tipText">押したらホームポジションへ戻す</div>
+              <div class="guide-value" id="tipText">Fから右へ</div>
             </div>
           </div>
         </div>
 
         <div class="controls">
-          <div>
-            <button class="primary-button" onclick="startGame()">スタート</button>
-            <button class="sub-button" onclick="nextWord(true)">次の単語</button>
-            <button class="sub-button" onclick="resetGame()">リセット</button>
+          <div class="button-row">
+            <button class="primary-button" id="startButton" onclick="startGame()">スタート</button>
+            <button class="sub-button" id="resetButton" onclick="resetGame()">リセット</button>
           </div>
           <input id="typingInput" class="hidden-input" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" />
-          <span id="statusText">スタートを押すと入力できます</span>
+          <span class="status-text" id="statusText">スタート前は入力してもカウントされません</span>
         </div>
       </section>
     </section>
 
-    <section class="stats-card" aria-label="成績表示">
+    <section class="card stats-card" aria-label="成績表示">
+      <div class="stat timer"><span>残り時間</span><strong id="timeText">60</strong></div>
       <div class="stat"><span>スコア</span><strong id="scoreText">0</strong></div>
       <div class="stat"><span>正タイプ</span><strong id="correctText">0</strong></div>
       <div class="stat"><span>ミス</span><strong id="mistakeText">0</strong></div>
@@ -662,8 +931,8 @@
       <div class="stat"><span>WPM</span><strong id="wpmText">0</strong></div>
     </section>
 
-    <section class="keyboard-card" aria-label="キーボードガイド">
-      <p class="keyboard-title">キーボードも光ります。実際の練習では、なるべく画面下の手元ガイドを見て、手元のキーボードは見ないようにします。</p>
+    <section class="card keyboard-card" aria-label="キーボードガイド">
+      <p class="keyboard-title">キーボードも光ります。実際の練習では、なるべく画面下の指ガイドを見て、手元のキーボードは見ないようにします。</p>
       <div class="keyboard" id="keyboard"></div>
     </section>
   </main>
@@ -680,8 +949,8 @@
 
       <div class="center-guide">
         <span>次に押すキー</span>
-        <div class="next-key" id="dockNextKey">P</div>
-        <div class="finger-guide-text" id="dockFingerText">右手 小指</div>
+        <div class="next-key" id="dockNextKey">G</div>
+        <div class="finger-guide-text" id="dockFingerText">左手 人差し指</div>
       </div>
 
       <div class="hand right-hand" aria-label="右手">
@@ -694,11 +963,31 @@
     </div>
   </footer>
 
+  <div class="result-modal" id="resultModal" aria-label="結果表示">
+    <div class="result-card">
+      <h2>クエスト終了</h2>
+      <p id="resultMessage">60秒の結果です。</p>
+      <div class="result-grid">
+        <div class="result-item"><span>スコア</span><strong id="resultScore">0</strong></div>
+        <div class="result-item"><span>正タイプ</span><strong id="resultCorrect">0</strong></div>
+        <div class="result-item"><span>ミス</span><strong id="resultMistake">0</strong></div>
+        <div class="result-item"><span>正確率</span><strong id="resultAccuracy">100%</strong></div>
+        <div class="result-item"><span>WPM</span><strong id="resultWpm">0</strong></div>
+        <div class="result-item"><span>クリア単語</span><strong id="resultWords">0</strong></div>
+      </div>
+      <div class="button-row" style="justify-content:center;">
+        <button class="primary-button" onclick="closeResultAndRestart()">もう一度挑戦</button>
+        <button class="sub-button" onclick="closeResult()">閉じる</button>
+      </div>
+    </div>
+  </div>
+
   <script>
     // ============================================================
-    // 1. 画像設定
-    // imgフォルダに同じ名前の画像を置くと、自動で表示されます。
+    // 1. 基本設定
     // ============================================================
+    const GAME_SECONDS = 60;
+
     const ASSETS = {
       saiNormal: "img/sai-normal.png",
       saiHappy: "img/sai-happy.png",
@@ -707,72 +996,141 @@
     };
 
     // ============================================================
-    // 2. 練習単語リスト
-    // label: 画面に表示する日本語
-    // romaji: 実際に入力させるローマ字
-    // meaning: SAI先生が補足する説明
+    // 2. 難易度設定
+    // scoreRate: 正解1キーあたりの点数
+    // wordBonus: 1単語クリア時のボーナス
+    // mistakePenalty: ミス時の減点
     // ============================================================
-    const WORDS = [
-      {
+    const MODES = {
+      easy: {
+        label: "見習い",
+        description: "見習い：短めの単語が中心。まずは指の位置を覚えるモードです。",
+        scoreRate: 8,
+        wordBonus: 30,
+        mistakePenalty: 0,
+        wordKeys: ["game", "math", "chess", "ship", "code", "computer"]
+      },
+      normal: {
+        label: "冒険者",
+        description: "冒険者：通常の単語練習です。正確さとリズムの両方を意識します。",
+        scoreRate: 10,
+        wordBonus: 50,
+        mistakePenalty: 8,
+        wordKeys: ["programming", "programmer", "checkmate", "computer", "math", "sailingShip", "game", "algorithm"]
+      },
+      hard: {
+        label: "賢者",
+        description: "賢者：長めの単語が増えます。ミスでスコアが下がる上級モードです。",
+        scoreRate: 13,
+        wordBonus: 80,
+        mistakePenalty: 18,
+        wordKeys: ["orbit", "programming", "programmer", "checkmate", "computer", "algorithm", "coordinate", "debug", "function"]
+      }
+    };
+
+    // ============================================================
+    // 3. 練習単語リスト
+    // key: 難易度設定から呼び出すための名前
+    // label: 表示する日本語
+    // romaji: 入力させるローマ字
+    // ============================================================
+    const WORD_BANK = {
+      programming: {
         label: "プログラミング",
         romaji: "puroguramingu",
         meaning: "コンピューターに命令を伝えるための考え方と作業。",
         teacher: "長い単語は、1文字ずつ分解すれば怖くありません。"
       },
-      {
+      programmer: {
         label: "プログラマー",
         romaji: "puroguramaa",
         meaning: "プログラムを作る人。考える力と確認する力が大事。",
         teacher: "最後の aa まで落ち着いて入力しましょう。"
       },
-      {
+      chess: {
         label: "チェス",
         romaji: "chesu",
         meaning: "先を読む力が試されるボードゲーム。",
         teacher: "ch は c、h の順番です。指の移動を小さく。"
       },
-      {
+      checkmate: {
         label: "チェックメイト",
         romaji: "chekkumeito",
         meaning: "チェスで王が逃げられない状態。",
         teacher: "同じ文字が続くところは、慌てず同じキーをもう一度。"
       },
-      {
+      computer: {
         label: "コンピューター",
         romaji: "konpyuutaa",
         meaning: "計算や処理を行う機械。プログラムで動かせる。",
         teacher: "pyu の並びは少し難しいです。右手と左手の交互を意識しましょう。"
       },
-      {
+      math: {
         label: "数学",
         romaji: "suugaku",
         meaning: "数や図形、構造を扱う学問。プログラミングとも相性が良い。",
         teacher: "uu は伸ばす音です。正確に2回打ちましょう。"
       },
-      {
+      ship: {
         label: "帆船",
         romaji: "hansen",
         meaning: "風を受けて進む船。冒険の雰囲気が出せる単語。",
         teacher: "ホームポジションに戻る癖をつけると、次のキーが速くなります。"
       },
-      {
+      sailingShip: {
+        label: "帆船",
+        romaji: "hansen",
+        meaning: "風を受けて進む船。冒険の雰囲気が出せる単語。",
+        teacher: "ホームポジションに戻る癖をつけると、次のキーが速くなります。"
+      },
+      orbit: {
         label: "軌道計算",
         romaji: "kidoukeisan",
         meaning: "物体がどのように動くかを計算すること。",
         teacher: "長い単語ほど、見ている場所は次の1文字だけで十分です。"
       },
-      {
+      game: {
         label: "ゲーム",
         romaji: "geemu",
         meaning: "遊びながら学べる、プログラムの代表的な作品。",
         teacher: "短い単語で、正確さを整えましょう。"
+      },
+      code: {
+        label: "コード",
+        romaji: "koodo",
+        meaning: "コンピューターに伝える命令のまとまり。",
+        teacher: "oo の伸ばしを落とさないようにしましょう。"
+      },
+      algorithm: {
+        label: "アルゴリズム",
+        romaji: "arugorizumu",
+        meaning: "問題を解くための手順や考え方。",
+        teacher: "r と g の位置を確認して、指を戻しながら進めましょう。"
+      },
+      coordinate: {
+        label: "座標",
+        romaji: "zahyou",
+        meaning: "位置を数字で表す考え方。ゲーム制作でもよく使います。",
+        teacher: "h と y の連続は右手人差し指の動きに注意です。"
+      },
+      debug: {
+        label: "デバッグ",
+        romaji: "debaggu",
+        meaning: "プログラムの間違いを見つけて直すこと。",
+        teacher: "gg は同じキーを2回。焦らず確実に。"
+      },
+      function: {
+        label: "関数",
+        romaji: "kansuu",
+        meaning: "処理をまとめて、必要なときに呼び出せる仕組み。",
+        teacher: "最後の uu までしっかり入力しましょう。"
       }
-    ];
+    };
 
     // ============================================================
-    // 3. キーと指の対応表
-    // QWERTY配列の基本的なホームポジション想定です。
-    // 実際の教材方針に合わせて、ここを変えるだけで指ガイドを調整できます。
+    // 4. キーと指の対応表
+    // ここにない文字は「未設定」になります。
+    // 英字単語なら、この表でほぼ対応できます。
     // ============================================================
     const FINGER_MAP = {
       q: { finger: "left-pinky", label: "左手 小指", tip: "Aの位置から上へ" },
@@ -803,13 +1161,16 @@
 
       i: { finger: "right-middle", label: "右手 中指", tip: "Kの位置から上へ" },
       k: { finger: "right-middle", label: "右手 中指", tip: "ホームポジション K" },
+      ",": { finger: "right-middle", label: "右手 中指", tip: "Kの位置から下へ" },
 
       o: { finger: "right-ring", label: "右手 薬指", tip: "Lの位置から上へ" },
       l: { finger: "right-ring", label: "右手 薬指", tip: "ホームポジション L" },
+      ".": { finger: "right-ring", label: "右手 薬指", tip: "Lの位置から下へ" },
 
       p: { finger: "right-pinky", label: "右手 小指", tip: ";の位置から上へ" },
       "-": { finger: "right-pinky", label: "右手 小指", tip: "右手小指を外側へ" },
       ";": { finger: "right-pinky", label: "右手 小指", tip: "ホームポジション ;" },
+      "/": { finger: "right-pinky", label: "右手 小指", tip: ";の位置から右下へ" },
 
       " ": { finger: "right-thumb", label: "親指", tip: "スペースキー" }
     };
@@ -817,21 +1178,24 @@
     const KEY_ROWS = [
       ["q", "w", "e", "r", "t", "y", "u", "i", "o", "p"],
       ["a", "s", "d", "f", "g", "h", "j", "k", "l", ";"],
-      ["z", "x", "c", "v", "b", "n", "m", "-"]
+      ["z", "x", "c", "v", "b", "n", "m", "-", "/"]
     ];
 
     const HOME_KEYS = new Set(["a", "s", "d", "f", "j", "k", "l", ";"]);
 
     const state = {
-      mode: "lesson",
+      mode: "easy",
+      words: [],
       currentWordIndex: 0,
       currentCharIndex: 0,
       score: 0,
       correct: 0,
       mistakes: 0,
+      completedWords: 0,
       startedAt: null,
-      isPlaying: false,
-      wordOrder: [],
+      remainingSeconds: GAME_SECONDS,
+      timerId: null,
+      gameStatus: "ready",
       combo: 0
     };
 
@@ -839,6 +1203,8 @@
       teacherImage: document.getElementById("teacherImage"),
       teacherPlaceholder: document.getElementById("teacherPlaceholder"),
       teacherSpeech: document.getElementById("teacherSpeech"),
+      modeDescription: document.getElementById("modeDescription"),
+      questLabel: document.getElementById("questLabel"),
       wordLabel: document.getElementById("wordLabel"),
       wordMeaning: document.getElementById("wordMeaning"),
       romajiLine: document.getElementById("romajiLine"),
@@ -848,6 +1214,9 @@
       dockNextKey: document.getElementById("dockNextKey"),
       dockFingerText: document.getElementById("dockFingerText"),
       statusText: document.getElementById("statusText"),
+      startButton: document.getElementById("startButton"),
+      resetButton: document.getElementById("resetButton"),
+      timeText: document.getElementById("timeText"),
       scoreText: document.getElementById("scoreText"),
       correctText: document.getElementById("correctText"),
       mistakeText: document.getElementById("mistakeText"),
@@ -856,87 +1225,162 @@
       typingInput: document.getElementById("typingInput"),
       typingArea: document.getElementById("typingArea"),
       keyboard: document.getElementById("keyboard"),
-      toast: document.getElementById("toast")
+      toast: document.getElementById("toast"),
+      resultModal: document.getElementById("resultModal"),
+      resultMessage: document.getElementById("resultMessage"),
+      resultScore: document.getElementById("resultScore"),
+      resultCorrect: document.getElementById("resultCorrect"),
+      resultMistake: document.getElementById("resultMistake"),
+      resultAccuracy: document.getElementById("resultAccuracy"),
+      resultWpm: document.getElementById("resultWpm"),
+      resultWords: document.getElementById("resultWords")
     };
 
     function init() {
-      state.wordOrder = shuffleIndexes(WORDS.length);
       buildKeyboard();
+      prepareWordsForMode();
       renderWord();
       renderStats();
-      focusTypingInput(false);
+      updateButtons();
       document.addEventListener("keydown", handleKeyDown);
+      focusTypingInput(false);
     }
 
-    function shuffleIndexes(length) {
-      const indexes = Array.from({ length }, (_, index) => index);
-      for (let i = indexes.length - 1; i > 0; i--) {
+    function prepareWordsForMode() {
+      const mode = MODES[state.mode];
+      state.words = shuffleArray(mode.wordKeys.map(key => WORD_BANK[key]).filter(Boolean));
+      state.currentWordIndex = 0;
+      state.currentCharIndex = 0;
+    }
+
+    function shuffleArray(array) {
+      const result = [...array];
+      for (let i = result.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
-        [indexes[i], indexes[j]] = [indexes[j], indexes[i]];
+        [result[i], result[j]] = [result[j], result[i]];
       }
-      return indexes;
+      return result;
     }
 
     function getCurrentWord() {
-      const wordIndex = state.wordOrder[state.currentWordIndex] ?? 0;
-      return WORDS[wordIndex];
-    }
-
-    function startGame() {
-      state.isPlaying = true;
-      state.startedAt = state.startedAt || Date.now();
-      els.statusText.textContent = "入力できます。キーボードを見ずに、光った指を使ってください。";
-      setTeacher("point", "次の1文字だけ見れば大丈夫です。速さより、まず正確さを優先しましょう。");
-      focusTypingInput();
-    }
-
-    function resetGame() {
-      state.currentWordIndex = 0;
-      state.currentCharIndex = 0;
-      state.score = 0;
-      state.correct = 0;
-      state.mistakes = 0;
-      state.combo = 0;
-      state.startedAt = null;
-      state.isPlaying = false;
-      state.wordOrder = shuffleIndexes(WORDS.length);
-      els.statusText.textContent = "スタートを押すと入力できます";
-      setTeacher("normal", "まずはホームポジションから始めよう。画面下の光った指で、次のキーを押してください。");
-      renderWord();
-      renderStats();
-      focusTypingInput(false);
-    }
-
-    function nextWord(isManual = false) {
-      state.currentCharIndex = 0;
-      state.currentWordIndex += 1;
-
-      if (state.currentWordIndex >= state.wordOrder.length) {
-        state.currentWordIndex = 0;
-        state.wordOrder = shuffleIndexes(WORDS.length);
-      }
-
-      renderWord();
-
-      if (isManual) {
-        setTeacher("think", "単語を切り替えました。苦手な単語は、あとで単語リストを増やして重点練習にできます。");
-      }
+      return state.words[state.currentWordIndex] || state.words[0];
     }
 
     function setMode(mode) {
+      if (state.gameStatus === "running") return;
+
       state.mode = mode;
+      prepareWordsForMode();
       document.querySelectorAll(".mode-button").forEach(button => {
         button.classList.toggle("is-active", button.dataset.mode === mode);
       });
 
-      const messages = {
-        lesson: "ゆっくりモードです。ミスしても進まないので、指の位置を確認しながら練習できます。",
-        normal: "通常モードです。正確さとリズムの両方を意識しましょう。",
-        challenge: "挑戦モードです。ミスがスコアに響きます。落ち着いていきましょう。"
-      };
+      els.modeDescription.textContent = MODES[mode].description;
+      setTeacher("point", `${MODES[mode].label}モードを選択しました。準備ができたらスタートしてください。`);
+      resetScoreOnly();
+      renderWord();
+      renderStats();
+      updateButtons();
+      focusTypingInput(false);
+    }
 
-      setTeacher("point", messages[mode]);
+    function startGame() {
+      if (state.gameStatus === "running") return;
+
+      resetScoreOnly();
+      prepareWordsForMode();
+      state.gameStatus = "running";
+      state.startedAt = Date.now();
+      state.remainingSeconds = GAME_SECONDS;
+      els.resultModal.classList.remove("show");
+
+      setTeacher("point", "クエスト開始です。次の1文字だけを見て、光った指で入力しましょう。");
+      els.statusText.textContent = "入力できます。60秒間、正確に打ち続けてください。";
+      renderWord();
+      renderStats();
+      updateButtons();
       focusTypingInput();
+
+      clearInterval(state.timerId);
+      state.timerId = setInterval(tickTimer, 1000);
+    }
+
+    function tickTimer() {
+      state.remainingSeconds -= 1;
+      renderStats();
+
+      if (state.remainingSeconds <= 10 && state.remainingSeconds > 0) {
+        els.statusText.textContent = `残り${state.remainingSeconds}秒。最後まで落ち着いて。`;
+      }
+
+      if (state.remainingSeconds <= 0) {
+        finishGame();
+      }
+    }
+
+    function finishGame() {
+      clearInterval(state.timerId);
+      state.timerId = null;
+      state.gameStatus = "finished";
+      state.remainingSeconds = 0;
+      state.currentCharIndex = 0;
+      state.combo = 0;
+      clearFingerHighlight();
+      highlightKeyboard("");
+      renderStats();
+      updateButtons();
+
+      const result = getResultStats();
+      els.statusText.textContent = "60秒終了。結果を表示しています。";
+      setTeacher("happy", getResultTeacherMessage(result));
+      showResult(result);
+    }
+
+    function resetGame() {
+      clearInterval(state.timerId);
+      state.timerId = null;
+      state.gameStatus = "ready";
+      state.remainingSeconds = GAME_SECONDS;
+      resetScoreOnly();
+      prepareWordsForMode();
+      els.resultModal.classList.remove("show");
+      els.statusText.textContent = "スタート前は入力してもカウントされません";
+      setTeacher("normal", "難易度を選んで、スタートを押してください。60秒のクエストが始まります。");
+      renderWord();
+      renderStats();
+      updateButtons();
+      focusTypingInput(false);
+    }
+
+    function resetScoreOnly() {
+      state.score = 0;
+      state.correct = 0;
+      state.mistakes = 0;
+      state.completedWords = 0;
+      state.startedAt = null;
+      state.combo = 0;
+      state.currentCharIndex = 0;
+      state.remainingSeconds = GAME_SECONDS;
+    }
+
+    function updateButtons() {
+      const isRunning = state.gameStatus === "running";
+      els.startButton.disabled = isRunning;
+      document.querySelectorAll(".mode-button").forEach(button => {
+        button.disabled = isRunning;
+      });
+    }
+
+    function nextWord() {
+      state.currentCharIndex = 0;
+      state.currentWordIndex += 1;
+
+      if (state.currentWordIndex >= state.words.length) {
+        state.currentWordIndex = 0;
+        state.words = shuffleArray(state.words);
+      }
+
+      renderWord();
     }
 
     function handleKeyDown(event) {
@@ -950,8 +1394,11 @@
 
       event.preventDefault();
 
-      if (!state.isPlaying) {
-        startGame();
+      if (state.gameStatus !== "running") {
+        els.statusText.textContent = "先に難易度を選んで、スタートを押してください。";
+        setTeacher("think", "まだクエストは始まっていません。スタートを押すと60秒の計測が始まります。");
+        focusTypingInput(false);
+        return;
       }
 
       checkKey(key);
@@ -965,70 +1412,68 @@
 
     function checkKey(key) {
       const word = getCurrentWord();
+      if (!word) return;
+
       const target = word.romaji[state.currentCharIndex];
+      if (!target) return;
 
       if (key === target) {
-        state.currentCharIndex += 1;
-        state.correct += 1;
-        state.combo += 1;
-        state.score += getScorePerKey();
-
-        if (state.currentCharIndex >= word.romaji.length) {
-          state.score += getWordBonus();
-          setTeacher("happy", getClearMessage(word));
-          renderStats();
-          setTimeout(() => nextWord(false), getNextWordDelay());
-        } else if (state.combo > 0 && state.combo % 12 === 0) {
-          setTeacher("happy", "いいリズムです。指を大きく動かしすぎないのがコツです。");
-        }
+        handleCorrectKey(word);
       } else {
-        state.mistakes += 1;
-        state.combo = 0;
         handleMistake(key, target);
       }
 
-      renderWord();
       renderStats();
     }
 
-    function getScorePerKey() {
-      if (state.mode === "challenge") return 12;
-      if (state.mode === "normal") return 10;
-      return 8;
-    }
+    function handleCorrectKey(word) {
+      const mode = MODES[state.mode];
 
-    function getWordBonus() {
-      if (state.mode === "challenge") return 80;
-      if (state.mode === "normal") return 50;
-      return 30;
-    }
+      state.currentCharIndex += 1;
+      state.correct += 1;
+      state.combo += 1;
+      state.score += mode.scoreRate;
 
-    function getNextWordDelay() {
-      if (state.mode === "challenge") return 360;
-      if (state.mode === "normal") return 620;
-      return 900;
+      if (state.currentCharIndex >= word.romaji.length) {
+        state.completedWords += 1;
+        state.score += mode.wordBonus;
+        setTeacher("happy", getClearMessage(word));
+
+        // ここが修正ポイント。
+        // 打ち終わった直後に空文字を指ガイドへ渡さず、すぐ次の単語へ進める。
+        nextWord();
+        return;
+      }
+
+      if (state.combo > 0 && state.combo % 15 === 0) {
+        setTeacher("happy", "いいリズムです。指を大きく動かしすぎないのがコツです。");
+      }
+
+      renderWord();
     }
 
     function handleMistake(key, target) {
+      const mode = MODES[state.mode];
       const fingerData = FINGER_MAP[target];
-      const targetText = target === " " ? "Space" : target.toUpperCase();
-      const keyText = key === " " ? "Space" : key.toUpperCase();
+      const targetText = formatKey(target);
+      const keyText = formatKey(key);
+
+      state.mistakes += 1;
+      state.combo = 0;
+      state.score = Math.max(0, state.score - mode.mistakePenalty);
 
       els.typingArea.classList.remove("mistake-flash");
       void els.typingArea.offsetWidth;
       els.typingArea.classList.add("mistake-flash");
 
-      if (state.mode === "challenge") {
-        state.score = Math.max(0, state.score - 15);
-      }
-
       setTeacher("think", `今は ${keyText} ではなく ${targetText} です。${fingerData?.label || "対応する指"}で押してみましょう。`);
+      renderWord();
     }
 
     function getClearMessage(word) {
       const messages = [
-        `「${word.label}」クリア。今の入力、悪くありません。`,
-        `いいですね。「${word.label}」は完了です。次も指を戻す意識で。`,
+        `「${word.label}」クリア。次の単語へ進みます。`,
+        `いいですね。「${word.label}」は完了です。指を戻して次へ。`,
         word.teacher || "その調子です。次の単語に進みましょう。"
       ];
       return messages[Math.floor(Math.random() * messages.length)];
@@ -1036,25 +1481,43 @@
 
     function renderWord() {
       const word = getCurrentWord();
+      if (!word) return;
+
       const typed = word.romaji.slice(0, state.currentCharIndex);
       const current = word.romaji[state.currentCharIndex] || "";
       const remaining = word.romaji.slice(state.currentCharIndex + 1);
 
+      els.questLabel.textContent = `${MODES[state.mode].label} QUEST WORD`;
       els.wordLabel.textContent = word.label;
       els.wordMeaning.textContent = word.meaning;
-      els.romajiLine.innerHTML = `
-        <span class="typed">${escapeHtml(typed)}</span><span class="current">${escapeHtml(current)}</span><span class="remaining">${escapeHtml(remaining)}</span>
-      `;
 
-      updateFingerGuide(current);
-      highlightKeyboard(current);
+      if (current) {
+        els.romajiLine.innerHTML = `
+          <span class="typed">${escapeHtml(typed)}</span><span class="current">${escapeHtml(current)}</span><span class="remaining">${escapeHtml(remaining)}</span>
+        `;
+        updateFingerGuide(current);
+        highlightKeyboard(current);
+      } else {
+        // 念のための保険。ここに入っても「未設定」は表示しない。
+        els.romajiLine.innerHTML = `<span class="typed">${escapeHtml(word.romaji)}</span>`;
+        updateCompletedGuide();
+      }
     }
 
     function updateFingerGuide(key) {
       clearFingerHighlight();
 
-      const data = FINGER_MAP[key] || { finger: "", label: "未設定", tip: "FINGER_MAPに対応を追加してください" };
-      const displayKey = key ? (key === " " ? "Space" : key.toUpperCase()) : "完了";
+      const data = FINGER_MAP[key];
+      const displayKey = formatKey(key);
+
+      if (!data) {
+        els.nextKeyText.textContent = displayKey;
+        els.fingerText.textContent = "対応未設定";
+        els.tipText.textContent = "FINGER_MAPにこのキーを追加してください";
+        els.dockNextKey.textContent = displayKey;
+        els.dockFingerText.textContent = "対応未設定";
+        return;
+      }
 
       els.nextKeyText.textContent = displayKey;
       els.fingerText.textContent = data.label;
@@ -1062,14 +1525,22 @@
       els.dockNextKey.textContent = displayKey;
       els.dockFingerText.textContent = data.label;
 
-      if (data.finger) {
-        const fingerEl = document.querySelector(`[data-finger="${data.finger}"]`);
-        if (fingerEl) {
-          fingerEl.classList.add("active");
-          const keyBadge = fingerEl.querySelector(".finger-key");
-          if (keyBadge) keyBadge.textContent = key === " " ? "SP" : key.toUpperCase();
-        }
+      const fingerEl = document.querySelector(`[data-finger="${data.finger}"]`);
+      if (fingerEl) {
+        fingerEl.classList.add("active");
+        const keyBadge = fingerEl.querySelector(".finger-key");
+        if (keyBadge) keyBadge.textContent = key === " " ? "SP" : key.toUpperCase();
       }
+    }
+
+    function updateCompletedGuide() {
+      clearFingerHighlight();
+      highlightKeyboard("");
+      els.nextKeyText.textContent = "次へ";
+      els.fingerText.textContent = "単語クリア";
+      els.tipText.textContent = "次の単語に進みます";
+      els.dockNextKey.textContent = "OK";
+      els.dockFingerText.textContent = "単語クリア";
     }
 
     function clearFingerHighlight() {
@@ -1081,16 +1552,65 @@
     }
 
     function renderStats() {
-      const total = state.correct + state.mistakes;
-      const accuracy = total === 0 ? 100 : Math.round((state.correct / total) * 100);
-      const elapsedMinutes = state.startedAt ? Math.max((Date.now() - state.startedAt) / 1000 / 60, 0.01) : 0;
-      const wpm = elapsedMinutes ? Math.round((state.correct / 5) / elapsedMinutes) : 0;
-
+      const result = getResultStats();
+      els.timeText.textContent = state.remainingSeconds;
       els.scoreText.textContent = state.score;
       els.correctText.textContent = state.correct;
       els.mistakeText.textContent = state.mistakes;
-      els.accuracyText.textContent = `${accuracy}%`;
-      els.wpmText.textContent = wpm;
+      els.accuracyText.textContent = `${result.accuracy}%`;
+      els.wpmText.textContent = result.wpm;
+    }
+
+    function getResultStats() {
+      const total = state.correct + state.mistakes;
+      const accuracy = total === 0 ? 100 : Math.round((state.correct / total) * 100);
+      const elapsedSeconds = state.startedAt ? Math.max((Date.now() - state.startedAt) / 1000, 1) : GAME_SECONDS;
+      const elapsedMinutes = Math.max(elapsedSeconds / 60, 1 / 60);
+      const wpm = state.startedAt ? Math.round((state.correct / 5) / elapsedMinutes) : 0;
+
+      return {
+        score: state.score,
+        correct: state.correct,
+        mistakes: state.mistakes,
+        accuracy,
+        wpm,
+        completedWords: state.completedWords
+      };
+    }
+
+    function showResult(result) {
+      els.resultScore.textContent = result.score;
+      els.resultCorrect.textContent = result.correct;
+      els.resultMistake.textContent = result.mistakes;
+      els.resultAccuracy.textContent = `${result.accuracy}%`;
+      els.resultWpm.textContent = result.wpm;
+      els.resultWords.textContent = result.completedWords;
+      els.resultMessage.textContent = makeResultMessage(result);
+      els.resultModal.classList.add("show");
+    }
+
+    function makeResultMessage(result) {
+      if (result.correct === 0) return "まだ記録はありません。スタート後に入力すると結果が出ます。";
+      if (result.accuracy >= 96 && result.wpm >= 45) return "かなり良い結果です。正確さと速度の両方が出ています。";
+      if (result.accuracy >= 92) return "正確さは良いです。次は少しだけテンポを上げてみましょう。";
+      if (result.wpm >= 40) return "速度は出ています。次はミスを減らすと一気に伸びます。";
+      return "まずは正確さ重視で大丈夫です。光った指を見て、ホームポジションへ戻しましょう。";
+    }
+
+    function getResultTeacherMessage(result) {
+      if (result.correct === 0) return "まだ計測できていません。もう一度スタートして、最初の1文字から始めましょう。";
+      if (result.accuracy >= 96) return "良い精度です。今の感覚を保ったまま、次は少し速度を上げましょう。";
+      return "結果を確認しましょう。ミスの数より、次にどの指を使うか意識できたかが大事です。";
+    }
+
+    function closeResult() {
+      els.resultModal.classList.remove("show");
+      focusTypingInput(false);
+    }
+
+    function closeResultAndRestart() {
+      els.resultModal.classList.remove("show");
+      startGame();
     }
 
     function buildKeyboard() {
@@ -1126,7 +1646,7 @@
       };
 
       els.teacherImage.src = srcMap[expression] || ASSETS.saiNormal;
-      els.teacherSpeech.textContent = message;
+      els.teacherSpeech.innerHTML = `<span class="speech-title">SAI先生</span>${escapeHtml(message)}`;
     }
 
     function showTeacherPlaceholder() {
@@ -1134,12 +1654,18 @@
       els.teacherPlaceholder.hidden = false;
     }
 
-    function focusTypingInput(showToast = true) {
+    function focusTypingInput(showToast = false) {
       els.typingInput.focus({ preventScroll: true });
       if (showToast) {
         els.toast.classList.add("show");
         setTimeout(() => els.toast.classList.remove("show"), 900);
       }
+    }
+
+    function formatKey(key) {
+      if (!key) return "";
+      if (key === " ") return "Space";
+      return key.toUpperCase();
     }
 
     function escapeHtml(text) {
